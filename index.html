@@ -13,20 +13,24 @@
           <h1>Biostat Interview Flashcards</h1>
           <p>Practice high-impact interview concepts with adaptive flashcards.</p>
         </div>
-        <button id="newCardBtn" class="btn btn--primary">Generate Card</button>
+        <button id="newCardBtn" class="btn btn--primary">Next Card</button>
       </header>
 
       <section class="flashcard-panel">
         <article id="flashcard" class="flashcard" aria-live="polite">
-          <div class="flashcard__face flashcard__face--front">
-            <h2>Question</h2>
-            <p id="questionText">Click “Generate Card” to start practicing.</p>
-          </div>
-          <div class="flashcard__face flashcard__face--back" hidden>
-            <h2>Answer</h2>
-            <p id="answerText"></p>
+          <div class="flashcard__inner">
+            <div class="flashcard__face flashcard__face--front">
+              <span class="flashcard__label">Question</span>
+              <p id="questionText">Click “Next Card” to start practicing.</p>
+            </div>
+            <div class="flashcard__face flashcard__face--back">
+              <span class="flashcard__label">Answer</span>
+              <p id="answerText"></p>
+            </div>
           </div>
         </article>
+
+        <p id="feedbackStatus" class="feedback-status" role="status" aria-live="polite"></p>
 
         <div class="controls">
           <button id="flipBtn" class="btn" disabled>Flip Card</button>

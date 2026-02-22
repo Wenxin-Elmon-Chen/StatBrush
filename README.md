@@ -4,13 +4,14 @@ A clean web app for practicing biostatistics interview questions with adaptive r
 
 ## Features
 
-- Generates interview-focused biostat flashcards from an internal question bank.
-- Flip cards to reveal answers.
-- Mark cards as **Relevant** or **Irrelevant**:
-  - Topics marked irrelevant are weighted down for future recommendations.
-  - Topics marked relevant are slightly weighted up.
+- Generates interview-focused flashcards dynamically (not from a fixed static list).
+- Builds questions in batches and automatically generates a new batch when the queue runs out.
+- Uses your **Relevant / Irrelevant** feedback by topic to steer future question generation.
+- Keeps the current card visible when you mark feedback (no forced jump to the next card).
+- Flip cards with a card-like 3D animation.
 - Save cards for review and remove/clear saved cards.
-- Persists feedback and saved cards in browser local storage.
+- Persists feedback, saved cards, and pending question queue in browser local storage.
+
 
 ## Run locally
 

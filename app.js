@@ -1,65 +1,131 @@
-const questionBank = [
-  {
-    id: 'survival-km',
-    topic: 'survival analysis',
-    question: 'When would you choose a Kaplan-Meier curve, and what does a step down represent?',
-    answer:
-      'Use Kaplan-Meier for time-to-event outcomes with censoring. Each step down reflects an observed event (for example, death or relapse) at that time point.',
+const topicCatalog = {
+  'survival analysis': {
+    interviewFocus: 'clinical trials and oncology studies',
+    templates: [
+      {
+        question: 'In {focus}, when would you pick Kaplan-Meier over life-table methods?',
+        answer:
+          'Kaplan-Meier is preferred when exact event times are known and censoring occurs continuously. It updates survival estimates at each event time.',
+      },
+      {
+        question: 'A Cox model in {focus} gives HR={hr}. How do you explain it to a hiring manager?',
+        answer:
+          'An HR of {hr} means the instantaneous event rate is about {(hrReduction)} lower in the treatment group, assuming proportional hazards.',
+      },
+      {
+        question: 'What quick checks would you mention for proportional hazards assumptions in {focus}?',
+        answer:
+          'State you would inspect Schoenfeld residual trends, log-log survival curves, and time interaction terms to verify hazards are approximately proportional.',
+      },
+    ],
   },
-  {
-    id: 'cox-hazard',
-    topic: 'survival analysis',
-    question: 'How do you interpret a hazard ratio of 0.65 from a Cox model?',
-    answer:
-      'A hazard ratio of 0.65 means the hazard in the exposed/treatment group is estimated to be 35% lower at any time, assuming proportional hazards.',
+  inference: {
+    interviewFocus: 'A/B testing and endpoint analysis',
+    templates: [
+      {
+        question: 'For {focus}, how do you differentiate statistical significance from clinical significance?',
+        answer:
+          'Statistical significance addresses signal vs noise under assumptions; clinical significance addresses whether the effect size is meaningful in practice.',
+      },
+      {
+        question: 'When presenting {focus}, why include confidence intervals in addition to p-values?',
+        answer:
+          'Confidence intervals communicate the plausible effect range and precision, while p-values alone do not show magnitude or direction uncertainty.',
+      },
+      {
+        question: 'In {focus}, what risk appears if you test many subgroup hypotheses without correction?',
+        answer:
+          'False positives inflate quickly; mention controlling FDR or family-wise error and pre-specifying key hypotheses.',
+      },
+    ],
   },
-  {
-    id: 'pvalue-ci',
-    topic: 'inference',
-    question: 'What is the difference between a p-value and a 95% confidence interval?',
-    answer:
-      'A p-value measures compatibility of data with a null hypothesis, while a confidence interval gives a plausible range for the effect size and its precision.',
+  'study design': {
+    interviewFocus: 'phase II/III trial planning',
+    templates: [
+      {
+        question: 'In {focus}, what inputs are essential for a sample-size calculation?',
+        answer:
+          'Specify alpha, target power, expected effect size, variance/event assumptions, allocation ratio, and attrition expectations.',
+      },
+      {
+        question: 'How do Type I and Type II errors translate to business risk in {focus}?',
+        answer:
+          'Type I can promote ineffective interventions; Type II can miss effective ones. Both have cost, ethical, and timeline implications.',
+      },
+      {
+        question: 'Why do interviewers care about endpoint hierarchy in {focus}?',
+        answer:
+          'Hierarchy protects error rates and clarifies interpretation when multiple primary/secondary endpoints are analyzed.',
+      },
+    ],
   },
-  {
-    id: 'power-sample',
-    topic: 'study design',
-    question: 'What key inputs are required for a sample size or power calculation in a two-arm trial?',
-    answer:
-      'You need expected effect size, variability/event rate assumptions, significance level (alpha), desired power, and allocation ratio/dropout assumptions.',
+  regression: {
+    interviewFocus: 'real-world evidence projects',
+    templates: [
+      {
+        question: 'In {focus}, how would you explain an adjusted odds ratio of {orValue}?',
+        answer:
+          'It means the odds of outcome are about {(orPercent)} higher in the exposed group after controlling for included covariates.',
+      },
+      {
+        question: 'What interview-ready checks improve logistic model credibility in {focus}?',
+        answer:
+          'Mention calibration, influential points, multicollinearity checks, and validation metrics like AUC with confidence intervals.',
+      },
+      {
+        question: 'When would you choose Poisson/negative binomial instead of logistic in {focus}?',
+        answer:
+          'Use count models when outcome is event counts over exposure time rather than binary yes/no outcomes.',
+      },
+    ],
   },
-  {
-    id: 'confounding',
-    topic: 'causal inference',
-    question: 'What is confounding, and how can it be addressed in observational studies?',
-    answer:
-      'Confounding occurs when a third variable relates to both exposure and outcome. Address it through design (matching/restriction) and analysis (stratification, regression, propensity scores).',
+  'causal inference': {
+    interviewFocus: 'observational healthcare datasets',
+    templates: [
+      {
+        question: 'For {focus}, how do you briefly define confounding in an interview?',
+        answer:
+          'A confounder influences both exposure and outcome, creating biased associations unless controlled by design or adjustment.',
+      },
+      {
+        question: 'In {focus}, when are propensity score methods useful?',
+        answer:
+          'They are useful for balancing observed covariates between groups via matching, weighting, or stratification before outcome modeling.',
+      },
+      {
+        question: 'What limitation would you disclose for causal claims from {focus}?',
+        answer:
+          'Unmeasured confounding can remain, so sensitivity analyses and careful causal assumptions should be stated explicitly.',
+      },
+    ],
   },
-  {
-    id: 'logistic-or',
-    topic: 'regression',
-    question: 'In logistic regression, how should you explain an odds ratio greater than 1 to a non-statistician?',
-    answer:
-      'An odds ratio above 1 indicates higher odds of the outcome for each unit increase in the predictor (or versus reference group), holding other variables constant.',
+  'data quality': {
+    interviewFocus: 'biomarker and EHR pipelines',
+    templates: [
+      {
+        question: 'In {focus}, how would you distinguish MCAR, MAR, and MNAR quickly?',
+        answer:
+          'MCAR is unrelated to data, MAR depends on observed variables, MNAR depends on unobserved values; MNAR needs stronger assumptions.',
+      },
+      {
+        question: 'Why is complete-case analysis risky in {focus}?',
+        answer:
+          'It can reduce power and introduce bias when missingness is associated with predictors or outcomes.',
+      },
+      {
+        question: 'What is a practical interview answer for handling missingness in {focus}?',
+        answer:
+          'Use multiple imputation under MAR assumptions, include predictors of missingness, and compare against sensitivity analyses.',
+      },
+    ],
   },
-  {
-    id: 'missing-data',
-    topic: 'data quality',
-    question: 'What is the difference between MCAR, MAR, and MNAR missingness?',
-    answer:
-      'MCAR: missingness unrelated to any data; MAR: related to observed data; MNAR: related to unobserved values themselves. MNAR is hardest to handle without strong assumptions.',
-  },
-  {
-    id: 'multiple-testing',
-    topic: 'inference',
-    question: 'Why is multiple testing correction important in genomics or biomarker screening?',
-    answer:
-      'Running many tests inflates false positives. Corrections like FDR control reduce spurious findings while preserving power better than strict family-wise approaches in high-dimensional settings.',
-  },
-];
+};
 
 const storageKeys = {
   feedback: 'biostat-feedback',
   saved: 'biostat-saved-cards',
+  queue: 'biostat-question-queue',
+  counter: 'biostat-question-counter',
 };
 
 const state = {
@@ -67,13 +133,15 @@ const state = {
   isBackVisible: false,
   feedbackByTopic: loadFromStorage(storageKeys.feedback, {}),
   savedCards: loadFromStorage(storageKeys.saved, []),
+  questionQueue: loadFromStorage(storageKeys.queue, []),
+  questionCounter: loadFromStorage(storageKeys.counter, 0),
 };
 
 const ui = {
   questionText: document.getElementById('questionText'),
   answerText: document.getElementById('answerText'),
-  frontFace: document.querySelector('.flashcard__face--front'),
-  backFace: document.querySelector('.flashcard__face--back'),
+  flashcard: document.getElementById('flashcard'),
+  feedbackStatus: document.getElementById('feedbackStatus'),
   newCardBtn: document.getElementById('newCardBtn'),
   flipBtn: document.getElementById('flipBtn'),
   saveBtn: document.getElementById('saveBtn'),
@@ -96,43 +164,88 @@ function loadFromStorage(key, fallback) {
 function persistState() {
   localStorage.setItem(storageKeys.feedback, JSON.stringify(state.feedbackByTopic));
   localStorage.setItem(storageKeys.saved, JSON.stringify(state.savedCards));
+  localStorage.setItem(storageKeys.queue, JSON.stringify(state.questionQueue));
+  localStorage.setItem(storageKeys.counter, JSON.stringify(state.questionCounter));
 }
 
 function topicWeight(topic) {
   const feedback = state.feedbackByTopic[topic] || { relevant: 0, irrelevant: 0 };
   const baseWeight = 1;
-  const penalty = feedback.irrelevant * 0.6;
-  const reward = feedback.relevant * 0.15;
+  const penalty = feedback.irrelevant * 0.55;
+  const reward = feedback.relevant * 0.2;
   return Math.max(0.2, baseWeight + reward - penalty);
 }
 
-function pickCard() {
-  const weightedPool = questionBank.map((card) => ({
-    card,
-    weight: topicWeight(card.topic),
-  }));
+function weightedTopicPick() {
+  const topics = Object.keys(topicCatalog);
+  const weighted = topics.map((topic) => ({ topic, weight: topicWeight(topic) }));
+  const total = weighted.reduce((sum, item) => sum + item.weight, 0);
 
-  const totalWeight = weightedPool.reduce((sum, item) => sum + item.weight, 0);
-  let threshold = Math.random() * totalWeight;
-
-  for (const item of weightedPool) {
+  let threshold = Math.random() * total;
+  for (const item of weighted) {
     threshold -= item.weight;
-    if (threshold <= 0) {
-      return item.card;
-    }
+    if (threshold <= 0) return item.topic;
   }
 
-  return questionBank[0];
+  return topics[0];
+}
+
+function tokenValues() {
+  const hr = (0.55 + Math.random() * 0.4).toFixed(2);
+  const hrReduction = `${Math.round((1 - Number(hr)) * 100)}%`;
+  const orValue = (1.2 + Math.random() * 1.4).toFixed(2);
+  const orPercent = `${Math.round((Number(orValue) - 1) * 100)}%`;
+  return { hr, hrReduction, orValue, orPercent };
+}
+
+function fillTemplate(text, topic) {
+  const data = { ...tokenValues(), focus: topicCatalog[topic].interviewFocus };
+  return text.replaceAll('{focus}', data.focus)
+    .replaceAll('{hr}', data.hr)
+    .replaceAll('{hrReduction}', data.hrReduction)
+    .replaceAll('{orValue}', data.orValue)
+    .replaceAll('{orPercent}', data.orPercent);
+}
+
+function generateQuestion(topic) {
+  const topicInfo = topicCatalog[topic];
+  const template = topicInfo.templates[Math.floor(Math.random() * topicInfo.templates.length)];
+
+  state.questionCounter += 1;
+  return {
+    id: `q-${state.questionCounter}`,
+    topic,
+    question: fillTemplate(template.question, topic),
+    answer: fillTemplate(template.answer, topic),
+  };
+}
+
+function generateBatch(size = 8) {
+  const batch = [];
+  for (let index = 0; index < size; index += 1) {
+    batch.push(generateQuestion(weightedTopicPick()));
+  }
+  state.questionQueue.push(...batch);
+  persistState();
+}
+
+function getNextCard() {
+  if (state.questionQueue.length === 0) {
+    generateBatch();
+  }
+
+  const next = state.questionQueue.shift();
+  persistState();
+  return next;
 }
 
 function showCard(card) {
   state.currentCard = card;
   state.isBackVisible = false;
+  ui.flashcard.classList.remove('is-flipped');
 
   ui.questionText.textContent = `${card.question} (${card.topic})`;
   ui.answerText.textContent = card.answer;
-  ui.backFace.hidden = true;
-  ui.frontFace.hidden = false;
 
   [ui.flipBtn, ui.saveBtn, ui.relevantBtn, ui.irrelevantBtn].forEach((button) => {
     button.disabled = false;
@@ -142,8 +255,7 @@ function showCard(card) {
 function flipCard() {
   if (!state.currentCard) return;
   state.isBackVisible = !state.isBackVisible;
-  ui.frontFace.hidden = state.isBackVisible;
-  ui.backFace.hidden = !state.isBackVisible;
+  ui.flashcard.classList.toggle('is-flipped', state.isBackVisible);
   ui.flipBtn.textContent = state.isBackVisible ? 'Show Question' : 'Flip Card';
 }
 
@@ -154,6 +266,18 @@ function addFeedback(topic, type) {
 
   state.feedbackByTopic[topic][type] += 1;
   persistState();
+}
+
+function recordFeedback(type) {
+  if (!state.currentCard) return;
+  addFeedback(state.currentCard.topic, type);
+
+  const message =
+    type === 'relevant'
+      ? `Marked as relevant. We'll recommend more ${state.currentCard.topic} cards.`
+      : `Marked as irrelevant. We'll recommend fewer ${state.currentCard.topic} cards.`;
+
+  ui.feedbackStatus.textContent = message;
 }
 
 function saveCurrentCard() {
@@ -205,27 +329,15 @@ function renderSavedCards() {
 }
 
 ui.newCardBtn.addEventListener('click', () => {
-  showCard(pickCard());
+  showCard(getNextCard());
   ui.flipBtn.textContent = 'Flip Card';
+  ui.feedbackStatus.textContent = '';
 });
 
 ui.flipBtn.addEventListener('click', flipCard);
 ui.saveBtn.addEventListener('click', saveCurrentCard);
-
-ui.relevantBtn.addEventListener('click', () => {
-  if (!state.currentCard) return;
-  addFeedback(state.currentCard.topic, 'relevant');
-  showCard(pickCard());
-  ui.flipBtn.textContent = 'Flip Card';
-});
-
-ui.irrelevantBtn.addEventListener('click', () => {
-  if (!state.currentCard) return;
-  addFeedback(state.currentCard.topic, 'irrelevant');
-  showCard(pickCard());
-  ui.flipBtn.textContent = 'Flip Card';
-});
-
+ui.relevantBtn.addEventListener('click', () => recordFeedback('relevant'));
+ui.irrelevantBtn.addEventListener('click', () => recordFeedback('irrelevant'));
 ui.clearBtn.addEventListener('click', clearSavedCards);
 
 renderSavedCards();
