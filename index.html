@@ -17,7 +17,7 @@
       </header>
 
       <section class="flashcard-panel">
-        <article id="flashcard" class="flashcard" aria-live="polite">
+        <article id="flashcard" class="flashcard" aria-live="polite" role="button" tabindex="0" aria-label="Flip flashcard">
           <div class="flashcard__inner">
             <div class="flashcard__face flashcard__face--front">
               <span class="flashcard__label">Question</span>
@@ -33,7 +33,6 @@
         <p id="feedbackStatus" class="feedback-status" role="status" aria-live="polite"></p>
 
         <div class="controls">
-          <button id="flipBtn" class="btn" disabled>Flip Card</button>
           <button id="saveBtn" class="btn" disabled>Save</button>
           <button id="relevantBtn" class="btn btn--success" disabled>Relevant</button>
           <button id="irrelevantBtn" class="btn btn--danger" disabled>Irrelevant</button>

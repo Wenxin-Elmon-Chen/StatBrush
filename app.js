@@ -143,7 +143,6 @@ const ui = {
   flashcard: document.getElementById('flashcard'),
   feedbackStatus: document.getElementById('feedbackStatus'),
   newCardBtn: document.getElementById('newCardBtn'),
-  flipBtn: document.getElementById('flipBtn'),
   saveBtn: document.getElementById('saveBtn'),
   relevantBtn: document.getElementById('relevantBtn'),
   irrelevantBtn: document.getElementById('irrelevantBtn'),
@@ -247,7 +246,7 @@ function showCard(card) {
   ui.questionText.textContent = `${card.question} (${card.topic})`;
   ui.answerText.textContent = card.answer;
 
-  [ui.flipBtn, ui.saveBtn, ui.relevantBtn, ui.irrelevantBtn].forEach((button) => {
+  [ui.saveBtn, ui.relevantBtn, ui.irrelevantBtn].forEach((button) => {
     button.disabled = false;
   });
 }
@@ -256,7 +255,6 @@ function flipCard() {
   if (!state.currentCard) return;
   state.isBackVisible = !state.isBackVisible;
   ui.flashcard.classList.toggle('is-flipped', state.isBackVisible);
-  ui.flipBtn.textContent = state.isBackVisible ? 'Show Question' : 'Flip Card';
 }
 
 function addFeedback(topic, type) {
@@ -330,11 +328,17 @@ function renderSavedCards() {
 
 ui.newCardBtn.addEventListener('click', () => {
   showCard(getNextCard());
-  ui.flipBtn.textContent = 'Flip Card';
   ui.feedbackStatus.textContent = '';
 });
 
-ui.flipBtn.addEventListener('click', flipCard);
+
+ui.flashcard.addEventListener('click', flipCard);
+ui.flashcard.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    flipCard();
+  }
+});
 ui.saveBtn.addEventListener('click', saveCurrentCard);
 ui.relevantBtn.addEventListener('click', () => recordFeedback('relevant'));
 ui.irrelevantBtn.addEventListener('click', () => recordFeedback('irrelevant'));

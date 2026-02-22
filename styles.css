@@ -59,6 +59,12 @@ p {
 .flashcard {
   perspective: 1200px;
   min-height: 240px;
+  cursor: pointer;
+}
+
+.flashcard:focus-visible {
+  outline: 3px solid #7fb0ff;
+  outline-offset: 4px;
 }
 
 .flashcard__inner {

@@ -8,10 +8,9 @@ A clean web app for practicing biostatistics interview questions with adaptive r
 - Builds questions in batches and automatically generates a new batch when the queue runs out.
 - Uses your **Relevant / Irrelevant** feedback by topic to steer future question generation.
 - Keeps the current card visible when you mark feedback (no forced jump to the next card).
-- Flip cards with a card-like 3D animation.
+- Flip cards by clicking the card itself (or using Enter/Space when focused) with a card-like 3D animation.
 - Save cards for review and remove/clear saved cards.
 - Persists feedback, saved cards, and pending question queue in browser local storage.
-
 
 ## Run locally
 
