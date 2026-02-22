@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biostat Interview Flashcards</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="app__header">
+        <div>
+          <h1>Biostat Interview Flashcards</h1>
+          <p>Practice high-impact interview concepts with adaptive flashcards.</p>
+        </div>
+        <button id="newCardBtn" class="btn btn--primary">Generate Card</button>
+      </header>
+
+      <section class="flashcard-panel">
+        <article id="flashcard" class="flashcard" aria-live="polite">
+          <div class="flashcard__face flashcard__face--front">
+            <h2>Question</h2>
+            <p id="questionText">Click “Generate Card” to start practicing.</p>
+          </div>
+          <div class="flashcard__face flashcard__face--back" hidden>
+            <h2>Answer</h2>
+            <p id="answerText"></p>
+          </div>
+        </article>
+
+        <div class="controls">
+          <button id="flipBtn" class="btn" disabled>Flip Card</button>
+          <button id="saveBtn" class="btn" disabled>Save</button>
+          <button id="relevantBtn" class="btn btn--success" disabled>Relevant</button>
+          <button id="irrelevantBtn" class="btn btn--danger" disabled>Irrelevant</button>
+        </div>
+      </section>
+
+      <section class="library-panel">
+        <div class="library-header">
+          <h2>Saved Flashcards</h2>
+          <button id="clearBtn" class="btn btn--ghost">Clear All</button>
+        </div>
+        <p class="library-note">Review saved cards and remove ones you no longer need.</p>
+        <ul id="savedList" class="saved-list"></ul>
+      </section>
+    </main>
+
+    <template id="savedCardTemplate">
+      <li class="saved-card">
+        <p class="saved-card__question"></p>
+        <p class="saved-card__answer"></p>
+        <div class="saved-card__meta"></div>
+        <button class="btn btn--ghost saved-card__remove">Remove</button>
+      </li>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
