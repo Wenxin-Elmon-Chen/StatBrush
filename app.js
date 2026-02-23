@@ -135,6 +135,8 @@ const state = {
   savedCards: loadFromStorage(storageKeys.saved, []),
   questionQueue: loadFromStorage(storageKeys.queue, []),
   questionCounter: loadFromStorage(storageKeys.counter, 0),
+  cardHistory: [],
+  historyIndex: -1,
 };
 
 const ui = {
@@ -142,7 +144,8 @@ const ui = {
   answerText: document.getElementById('answerText'),
   flashcard: document.getElementById('flashcard'),
   feedbackStatus: document.getElementById('feedbackStatus'),
-  newCardBtn: document.getElementById('newCardBtn'),
+  prevCardBtn: document.getElementById('prevCardBtn'),
+  nextCardBtn: document.getElementById('nextCardBtn'),
   saveBtn: document.getElementById('saveBtn'),
   relevantBtn: document.getElementById('relevantBtn'),
   irrelevantBtn: document.getElementById('irrelevantBtn'),
@@ -249,6 +252,31 @@ function showCard(card) {
   [ui.saveBtn, ui.relevantBtn, ui.irrelevantBtn].forEach((button) => {
     button.disabled = false;
   });
+
+  updateNavigationButtons();
+}
+
+function updateNavigationButtons() {
+  ui.prevCardBtn.disabled = state.historyIndex <= 0;
+}
+
+function showNextCard() {
+  if (state.historyIndex < state.cardHistory.length - 1) {
+    state.historyIndex += 1;
+    showCard(state.cardHistory[state.historyIndex]);
+    return;
+  }
+
+  const nextCard = getNextCard();
+  state.cardHistory.push(nextCard);
+  state.historyIndex = state.cardHistory.length - 1;
+  showCard(nextCard);
+}
+
+function showPreviousCard() {
+  if (state.historyIndex <= 0) return;
+  state.historyIndex -= 1;
+  showCard(state.cardHistory[state.historyIndex]);
 }
 
 function flipCard() {
@@ -326,11 +354,15 @@ function renderSavedCards() {
   }
 }
 
-ui.newCardBtn.addEventListener('click', () => {
-  showCard(getNextCard());
+ui.nextCardBtn.addEventListener('click', () => {
+  showNextCard();
   ui.feedbackStatus.textContent = '';
 });
 
+ui.prevCardBtn.addEventListener('click', () => {
+  showPreviousCard();
+  ui.feedbackStatus.textContent = '';
+});
 
 ui.flashcard.addEventListener('click', flipCard);
 ui.flashcard.addEventListener('keydown', (event) => {
@@ -344,4 +376,5 @@ ui.relevantBtn.addEventListener('click', () => recordFeedback('relevant'));
 ui.irrelevantBtn.addEventListener('click', () => recordFeedback('irrelevant'));
 ui.clearBtn.addEventListener('click', clearSavedCards);
 
+updateNavigationButtons();
 renderSavedCards();

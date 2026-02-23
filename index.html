@@ -13,22 +13,27 @@
           <h1>Biostat Interview Flashcards</h1>
           <p>Practice high-impact interview concepts with adaptive flashcards.</p>
         </div>
-        <button id="newCardBtn" class="btn btn--primary">Next Card</button>
       </header>
 
       <section class="flashcard-panel">
-        <article id="flashcard" class="flashcard" aria-live="polite" role="button" tabindex="0" aria-label="Flip flashcard">
-          <div class="flashcard__inner">
-            <div class="flashcard__face flashcard__face--front">
-              <span class="flashcard__label">Question</span>
-              <p id="questionText">Click “Next Card” to start practicing.</p>
+        <div class="card-nav-wrap">
+          <button id="prevCardBtn" class="card-nav-btn" aria-label="Previous card">&lt;</button>
+
+          <article id="flashcard" class="flashcard" aria-live="polite" role="button" tabindex="0" aria-label="Flip flashcard">
+            <div class="flashcard__inner">
+              <div class="flashcard__face flashcard__face--front">
+                <span class="flashcard__label">Question</span>
+                <p id="questionText">Click “&gt;” to start practicing.</p>
+              </div>
+              <div class="flashcard__face flashcard__face--back">
+                <span class="flashcard__label">Answer</span>
+                <p id="answerText"></p>
+              </div>
             </div>
-            <div class="flashcard__face flashcard__face--back">
-              <span class="flashcard__label">Answer</span>
-              <p id="answerText"></p>
-            </div>
-          </div>
-        </article>
+          </article>
+
+          <button id="nextCardBtn" class="card-nav-btn" aria-label="Next card">&gt;</button>
+        </div>
 
         <p id="feedbackStatus" class="feedback-status" role="status" aria-live="polite"></p>
 
