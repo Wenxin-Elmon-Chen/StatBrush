@@ -58,15 +58,15 @@ p {
 
 
 .card-nav-wrap {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 0.75rem;
+  display: flex;
   align-items: center;
+  gap: 0.75rem;
 }
 
 .card-nav-btn {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--surface);
@@ -85,6 +85,7 @@ p {
   perspective: 1200px;
   min-height: 240px;
   cursor: pointer;
+  flex: 1 1 auto;
 }
 
 .flashcard:focus-visible {
@@ -254,11 +255,12 @@ p {
   }
 
   .card-nav-wrap {
-    grid-template-columns: 1fr;
+    gap: 0.5rem;
   }
 
   .card-nav-btn {
-    justify-self: center;
+    width: 40px;
+    height: 40px;
   }
 
   .flashcard__face p {

@@ -376,5 +376,17 @@ ui.relevantBtn.addEventListener('click', () => recordFeedback('relevant'));
 ui.irrelevantBtn.addEventListener('click', () => recordFeedback('irrelevant'));
 ui.clearBtn.addEventListener('click', clearSavedCards);
 
+window.addEventListener('keydown', (event) => {
+  if (event.target === ui.flashcard) return;
+  if (event.key === 'ArrowRight') {
+    showNextCard();
+    ui.feedbackStatus.textContent = '';
+  }
+  if (event.key === 'ArrowLeft') {
+    showPreviousCard();
+    ui.feedbackStatus.textContent = '';
+  }
+});
+
 updateNavigationButtons();
 renderSavedCards();
